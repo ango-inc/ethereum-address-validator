@@ -15,13 +15,13 @@ const validate = (sig, message, address) => {
 
   const messageWithSha3 = web3.sha3(message)
   const extractedAddressWithSha3 = extractEthAddress(sig, messageWithSha3)
-  if (extractedAddressWithSha3 === address) {
+  if (extractedAddressWithSha3.toLowerCase() === address.toLowerCase()) {
     return { isValid: true, invalidReason: null }
   }
 
   const messageWithSha256 = eth.sha256(message)
   const extractedAddressWithSha256 = extractEthAddress(sig, messageWithSha256)
-  if (extractedAddressWithSha256 === address) {
+  if (extractedAddressWithSha256.toLowerCase() === address.toLowerCase()) {
     return { isValid: true, invalidReason: null }
   }
 
@@ -56,7 +56,7 @@ const isValidEthAddress = (address) => {
   if (!address) {
     return false
   }
-  return web3._extend.utils.isAddress(address)
+  return web3._extend.utils.isAddress(address.toLowerCase()) // or toUpperCase(), anyway it should be all small or capital chars
 }
 
  module.exports = {

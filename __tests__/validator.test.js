@@ -8,9 +8,12 @@ test('validate', () => {
   const sigWithSha3 = '0x9e9d9caa1f4c89cd0df29b56d89d7f89279104bb80d0f994396d188889a6ffdc1a07bb214acd6101152e90768c49a3120978075fdf7ed43bd35e9931594448461b'
   const sigWithSha256 = '0x7eded7d8fd9bcea7ee31ddb6843b3b6806ce099694150f824d87689f452de3661bcbda3070861026795cfd91ecdfe0244e58f63b2bc9c9aae928056a5a21b6691b'
   const ethereumAddress = '0xe0bdf5ac185d88ffe01d0b9438289f8c256e4e93'
+  const ethereumAddressCaseMixed = '0xe0bdf5Ac185d88FFE01d0b9438289f8c256E4e93';
 
   expect(validator.validate(sigWithSha3, message, ethereumAddress)).toEqual({ isValid: true, invalidReason: null })
+  expect(validator.validate(sigWithSha3, message, ethereumAddressCaseMixed)).toEqual({ isValid: true, invalidReason: null })
   expect(validator.validate(sigWithSha256, message, ethereumAddress)).toEqual({ isValid: true, invalidReason: null })
+  expect(validator.validate(sigWithSha256, message, ethereumAddressCaseMixed)).toEqual({ isValid: true, invalidReason: null })
   expect(validator.validate(sigWithSha256, '', ethereumAddress)).toEqual({ isValid: false, invalidReason: 'Signature is invalid' })
   expect(validator.validate('', message, ethereumAddress)).toEqual({ isValid: false, invalidReason: 'Signature is invalid' })
   expect(validator.validate(`${sigWithSha256.replace('a', 'b')}`, message, ethereumAddress)).toEqual({ isValid: false, invalidReason: 'Signature is invalid' })
